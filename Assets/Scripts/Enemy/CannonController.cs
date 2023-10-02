@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public class CannonController : MonoBehaviour
 {
@@ -18,6 +19,8 @@ public class CannonController : MonoBehaviour
     {
         // Find the player by tag or other means (e.g., using a reference if already assigned)
         player = GameObject.FindGameObjectWithTag("Player");
+        currentProjectile = GameObject.FindGameObjectWithTag("Projectile");
+        currentProjectile.transform.position = firePoint.position;
         playerRotation = player.transform.rotation;
     }
 
@@ -34,24 +37,26 @@ public class CannonController : MonoBehaviour
         // Calculate the direction towards the player
         Vector3 direction = (player.transform.position - firePoint.position).normalized;
 
-        
+
 
         // Create a new projectile from the prefab
-        currentProjectile = Instantiate(projectilePrefab, firePoint.position, Quaternion.identity);
+        //currentProjectile = Instantiate(projectilePrefab, firePoint.position, Quaternion.identity);
+        currentProjectile.SetActive(true);
 
 
         // Get the rigidbody of the projectile and apply force in the calculated direction
         Rigidbody rb = currentProjectile.GetComponent<Rigidbody>();
         rb.AddForce(direction * fireForce, ForceMode.Impulse);
 
-        // Destroy the projectile after a certain time (adjust as needed)
-        Destroy(currentProjectile, projectileLifeTime);
+        // Destroy the projectile after a certain time (adjust as needed), instead of destroying it, we reset the bullet
+        //Destroy(currentProjectile, projectileLifeTime);
+        StartCoroutine(ResetBullet(projectileLifeTime));
     }
 
     private void Update()
     {
         // Check if there's an active projectile
-        if (currentProjectile != null)
+        if (currentProjectile != null && currentProjectile.activeSelf)
         {
             // Rotate the player's camera to look at the projectile
             player.transform.LookAt(currentProjectile.transform.position);
@@ -75,5 +80,14 @@ public class CannonController : MonoBehaviour
                 //playerController.LockMovement(false);
             }
         }
+    }
+
+    private IEnumerator ResetBullet(float delayInSeconds)
+    {
+        // Wait for the specified delay
+        yield return new WaitForSeconds(delayInSeconds);
+
+        currentProjectile.SetActive(false);
+        currentProjectile.transform.position = firePoint.position;
     }
 }

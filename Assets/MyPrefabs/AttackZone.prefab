@@ -67,3 +67,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cannonController: {fileID: 0}
+  BulletTime: 10
+  vignetteController: {fileID: 0}
