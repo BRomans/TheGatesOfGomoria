@@ -6,6 +6,8 @@ public class CannonController : MonoBehaviour
     public Transform firePoint;           // Point where the projectile is spawned
     public float fireForce = 10f;         // Force applied to the projectile
 
+    public float projectileLifeTime = 5f;
+
     private Transform player;             // Reference to the player's transform
 
     private void Start()
@@ -22,7 +24,7 @@ public class CannonController : MonoBehaviour
         }
     }
 
-    private void ShootAtPlayer()
+    public void ShootAtPlayer()
     {
         // Calculate the direction towards the player
         Vector3 direction = (player.position - firePoint.position).normalized;
@@ -35,6 +37,6 @@ public class CannonController : MonoBehaviour
         rb.AddForce(direction * fireForce, ForceMode.Impulse);
 
         // Destroy the projectile after a certain time (adjust as needed)
-        Destroy(newProjectile, 5f);
+        Destroy(newProjectile, projectileLifeTime);
     }
 }
