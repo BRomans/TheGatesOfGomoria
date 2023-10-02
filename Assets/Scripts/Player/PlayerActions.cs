@@ -63,7 +63,10 @@ public class PlayerActions : MonoBehaviour
         } 
         else 
         {
-            UseText.gameObject.SetActive(false);
+            if(UseText != null)
+            {
+                UseText.gameObject.SetActive(false);
+            }
         }
     }
 }
