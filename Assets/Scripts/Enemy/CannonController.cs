@@ -8,12 +8,17 @@ public class CannonController : MonoBehaviour
 
     public float projectileLifeTime = 5f;
 
-    private Transform player;             // Reference to the player's transform
+    private GameObject player;    // Reference to the player's transform
+    
+    private GameObject currentProjectile;    
+
+    private Quaternion playerRotation;     
 
     private void Start()
     {
         // Find the player by tag or other means (e.g., using a reference if already assigned)
-        player = GameObject.FindGameObjectWithTag("Player").transform;
+        player = GameObject.FindGameObjectWithTag("Player");
+        playerRotation = player.transform.rotation;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -27,16 +32,48 @@ public class CannonController : MonoBehaviour
     public void ShootAtPlayer()
     {
         // Calculate the direction towards the player
-        Vector3 direction = (player.position - firePoint.position).normalized;
+        Vector3 direction = (player.transform.position - firePoint.position).normalized;
+
+        
 
         // Create a new projectile from the prefab
-        GameObject newProjectile = Instantiate(projectilePrefab, firePoint.position, Quaternion.identity);
+        currentProjectile = Instantiate(projectilePrefab, firePoint.position, Quaternion.identity);
+
 
         // Get the rigidbody of the projectile and apply force in the calculated direction
-        Rigidbody rb = newProjectile.GetComponent<Rigidbody>();
+        Rigidbody rb = currentProjectile.GetComponent<Rigidbody>();
         rb.AddForce(direction * fireForce, ForceMode.Impulse);
 
         // Destroy the projectile after a certain time (adjust as needed)
-        Destroy(newProjectile, projectileLifeTime);
+        Destroy(currentProjectile, projectileLifeTime);
+    }
+
+    private void Update()
+    {
+        // Check if there's an active projectile
+        if (currentProjectile != null)
+        {
+            // Rotate the player's camera to look at the projectile
+            player.transform.LookAt(currentProjectile.transform.position);
+
+            // Lock the player's movements (you can implement this in your player controller script)
+            // For example, if you have a player controller script, set a flag to lock movements
+            //PlayerController playerController = FindObjectOfType<PlayerController>();
+            if (player != null)
+            {
+                //Debug.Log("Locking player");
+                //playerController.LockMovement(true);
+            }
+        }
+        else
+        {
+            // Unlock the player's movements when there's no active projectile
+            //PlayerController playerController = FindObjectOfType<PlayerController>();
+            if (player != null)
+            {
+                //Debug.Log("Unlocking player");
+                //playerController.LockMovement(false);
+            }
+        }
     }
 }
