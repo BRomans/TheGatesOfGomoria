@@ -13,7 +13,9 @@ public class CannonController : MonoBehaviour
     
     private GameObject currentProjectile;    
 
-    private Quaternion playerRotation;     
+    private Quaternion playerRotation;    
+
+    public bool isBulletTimeActive = false; 
 
     private void Start()
     {
@@ -56,7 +58,7 @@ public class CannonController : MonoBehaviour
     private void Update()
     {
         // Check if there's an active projectile
-        if (currentProjectile != null && currentProjectile.activeSelf)
+        if (currentProjectile != null && isBulletTimeActive)
         {
             // Rotate the player's camera to look at the projectile
             player.transform.LookAt(currentProjectile.transform.position);

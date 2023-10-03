@@ -78,7 +78,7 @@ public class ClassSelectionAvailableExample : MonoBehaviour
             }
 
             // select currently selected object; select none if zero class was selected
-            if(_selectedClass > 0 && _selectedClass < 4)
+            if(_selectedClass > 0 && _selectedClass <= 4)
             {
                 _selectedObjects[(int) _selectedClass].gameObject.SetActive(true);
                 try 

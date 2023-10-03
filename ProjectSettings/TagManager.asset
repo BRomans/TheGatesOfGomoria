@@ -8,6 +8,7 @@ TagManager:
   - Gate
   - Cannon
   - Projectile
+  - Sigil
   layers:
   - Default
   - TransparentFX

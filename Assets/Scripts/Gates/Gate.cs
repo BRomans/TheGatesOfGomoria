@@ -22,9 +22,14 @@ public class Gate : MonoBehaviour
     [SerializeField]
     private float ForwardDirection = 0;
 
+    [SerializeField]
+    private Transform anchorPoint;
+
     private Vector3 StartRotation;
     private Vector3 Forward;
     private Coroutine AnimationCoroutine;
+
+    private GameObject currentSigil;
 
     void Awake()
     {
@@ -37,7 +42,9 @@ public class Gate : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        currentSigil = GameObject.FindGameObjectWithTag("Sigil");
+        currentSigil.transform.position = anchorPoint.position;
+        currentSigil.transform.SetParent(transform);
     }
 
     // Update is called once per frame

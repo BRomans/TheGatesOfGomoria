@@ -53,8 +53,10 @@ public class BulletTimeZone : MonoBehaviour
                 projectileRigidbody.velocity /= 200f; // Reduces speed by 1000 times
 
                 // Start a coroutine to reset the speed after 10 seconds
-                StartCoroutine(ResetBulletTime(BulletTime)); // 10 seconds delay
+                cannonController.isBulletTimeActive = true;
                 isBulletTimeActive = true;
+                StartCoroutine(ResetBulletTime(BulletTime)); // 10 seconds delay
+                
             }
         }
     }
@@ -76,6 +78,7 @@ public class BulletTimeZone : MonoBehaviour
 
             // Bullet time is no longer active
             isBulletTimeActive = false;
+            cannonController.isBulletTimeActive = false;
         }
     }
 }
