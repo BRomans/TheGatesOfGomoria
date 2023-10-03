@@ -9,6 +9,7 @@ TagManager:
   - Cannon
   - Projectile
   - Sigil
+  - BulletTime
   layers:
   - Default
   - TransparentFX

@@ -22,7 +22,6 @@ public class CannonController : MonoBehaviour
         // Find the player by tag or other means (e.g., using a reference if already assigned)
         player = GameObject.FindGameObjectWithTag("Player");
         currentProjectile = GameObject.FindGameObjectWithTag("Projectile");
-        currentProjectile.transform.position = firePoint.position;
         playerRotation = player.transform.rotation;
     }
 
@@ -37,6 +36,7 @@ public class CannonController : MonoBehaviour
     public void ShootAtPlayer()
     {
         // Calculate the direction towards the player
+        currentProjectile.transform.position = firePoint.position;
         Vector3 direction = (player.transform.position - firePoint.position).normalized;
 
 
@@ -91,5 +91,6 @@ public class CannonController : MonoBehaviour
 
         currentProjectile.SetActive(false);
         currentProjectile.transform.position = firePoint.position;
+        
     }
 }

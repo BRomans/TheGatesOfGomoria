@@ -55,18 +55,24 @@ public class BulletTimeZone : MonoBehaviour
                 // Start a coroutine to reset the speed after 10 seconds
                 cannonController.isBulletTimeActive = true;
                 isBulletTimeActive = true;
-                StartCoroutine(ResetBulletTime(BulletTime)); // 10 seconds delay
+                StartCoroutine(ResetBulletTimeTimer(BulletTime)); // 10 seconds delay
                 
             }
         }
     }
 
 
-    private IEnumerator ResetBulletTime(float delayInSeconds)
+    private IEnumerator ResetBulletTimeTimer(float delayInSeconds)
     {
         // Wait for the specified delay
         yield return new WaitForSeconds(delayInSeconds);
 
+        ResetBulletTime();
+       
+    }
+
+    public void ResetBulletTime()
+    {
         // Disable the bullet time effect and color filter
         vignetteController.DeactivateBulletTimeEffect();
 
@@ -81,4 +87,5 @@ public class BulletTimeZone : MonoBehaviour
             cannonController.isBulletTimeActive = false;
         }
     }
+
 }

@@ -12,8 +12,12 @@ public class ClassSelectionAvailableExample : MonoBehaviour
 
     public CVEPFlashController3D _flashController;
     private Dictionary<int, Renderer> _selectedObjects;
+
+    private GameObject player;
     void Start()
     {
+
+        player = GameObject.FindGameObjectWithTag("Player");
         //attach to class selection available event
         BCIManager.Instance.ClassSelectionAvailable += OnClassSelectionAvailable;
 
@@ -64,6 +68,17 @@ public class ClassSelectionAvailableExample : MonoBehaviour
                 case 3:
                     break;
                 case 4:
+                    GameObject currentProjectile = GameObject.FindGameObjectWithTag("Projectile");
+                     // Calculate the direction opposite to the player's facing direction
+                    Vector3 oppositeDirection = -player.transform.forward;
+
+                    // Determine a random direction (left or right)
+                    Vector3 randomDirection = (UnityEngine.Random.Range(0, 2) == 0) ? Quaternion.Euler(0, 45f, 0) * oppositeDirection : Quaternion.Euler(0, -45f, 0) * oppositeDirection;
+
+                    // Call the Bounce method to make the projectile bounce
+                    currentProjectile.GetComponent<BounceProjectile>().Bounce(randomDirection, 10f); // Adjust the force as needed
+                    GameObject bulletTime = GameObject.FindGameObjectWithTag("BulletTime");
+                    bulletTime.GetComponent<BulletTimeZone>().ResetBulletTime();
                     break;
                 case 5:
                     break;
