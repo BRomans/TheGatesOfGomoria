@@ -1751,7 +1751,7 @@ PrefabInstance:
     - target: {fileID: 6420512416770977473, guid: 1ba981cfe48fad74ebddd10d9d20bd87, type: 3}
       propertyPath: TrainingObject.FlashMaterial
       value: 
-      objectReference: {fileID: 2100000, guid: 21e4d9efe9df62a4f91a5bf9183891ee, type: 2}
+      objectReference: {fileID: 2100000, guid: d0d1f61a9e6921e44a590f9a0f7cc25a, type: 2}
     - target: {fileID: 6420512416770977473, guid: 1ba981cfe48fad74ebddd10d9d20bd87, type: 3}
       propertyPath: ApplicationObjects.Array.size
       value: 4
