@@ -55,12 +55,31 @@ public class ClassSelectionAvailableExample : MonoBehaviour
         //TODO ADD YOUR CODE HERE
         if(_update)
         {
-            
+            GameObject player = GameObject.FindWithTag("Player");
             switch (_selectedClass)
             {
+                
                 case 0:
                     break;
                 case 1:
+                    try 
+                    {
+                        GameObject gateObject = GameObject.FindWithTag(gateTag);
+                        
+                        if(gateObject != null)
+                        {
+                            Gate nearestGate = gateObject.GetComponent<Gate>();
+                        
+                            // You found the object, you can now work with it
+                            Debug.Log("Found object with tag: " + nearestGate);
+                        
+                            nearestGate.Open(player.transform.position);
+                        }
+                    } 
+                    catch (Exception e)
+                    {
+                        Debug.Log(e + " No Gate object found");
+                    }
                     break;
                 case 2:
                     
@@ -76,9 +95,9 @@ public class ClassSelectionAvailableExample : MonoBehaviour
                     Vector3 randomDirection = (UnityEngine.Random.Range(0, 2) == 0) ? Quaternion.Euler(0, 45f, 0) * oppositeDirection : Quaternion.Euler(0, -45f, 0) * oppositeDirection;
 
                     // Call the Bounce method to make the projectile bounce
-                    currentProjectile.GetComponent<BounceProjectile>().Bounce(randomDirection, 10f); // Adjust the force as needed
+                    currentProjectile.GetComponent<BounceProjectile>().Bounce(randomDirection, 1f); // Adjust the force as needed
                     GameObject bulletTime = GameObject.FindGameObjectWithTag("BulletTime");
-                    bulletTime.GetComponent<BulletTimeZone>().ResetBulletTime();
+                    // bulletTime.GetComponent<BulletTimeZone>().ResetBulletTime();
                     break;
                 case 5:
                     break;
@@ -96,18 +115,7 @@ public class ClassSelectionAvailableExample : MonoBehaviour
             if(_selectedClass > 0 && _selectedClass <= 4)
             {
                 _selectedObjects[(int) _selectedClass].gameObject.SetActive(true);
-                try 
-                {
-                    Gate nearestGate = GameObject.FindWithTag(gateTag).GetComponent<Gate>();
-                    GameObject player = GameObject.FindWithTag("Player");
-                    // You found the object, you can now work with it
-                    Debug.Log("Found object with tag: " + nearestGate);
-                    nearestGate.Open(player.transform.position);
-                } 
-                catch (Exception e)
-                {
-                    Debug.Log(e + " No Gate object found");
-                }
+                
             }
             _update = false;
         } 

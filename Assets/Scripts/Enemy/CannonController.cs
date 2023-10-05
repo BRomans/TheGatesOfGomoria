@@ -35,6 +35,7 @@ public class CannonController : MonoBehaviour
 
     public void ShootAtPlayer()
     {
+
         // Calculate the direction towards the player
         currentProjectile.transform.position = firePoint.position;
         Vector3 direction = (player.transform.position - firePoint.position).normalized;
@@ -44,6 +45,7 @@ public class CannonController : MonoBehaviour
         // Create a new projectile from the prefab
         //currentProjectile = Instantiate(projectilePrefab, firePoint.position, Quaternion.identity);
         currentProjectile.SetActive(true);
+        currentProjectile.transform.LookAt(player.transform.position);
 
 
         // Get the rigidbody of the projectile and apply force in the calculated direction
@@ -60,14 +62,12 @@ public class CannonController : MonoBehaviour
         // Check if there's an active projectile
         if (currentProjectile != null && isBulletTimeActive)
         {
-            // Rotate the player's camera to look at the projectile
-            player.transform.LookAt(currentProjectile.transform.position);
 
             // Lock the player's movements (you can implement this in your player controller script)
-            // For example, if you have a player controller script, set a flag to lock movements
-            //PlayerController playerController = FindObjectOfType<PlayerController>();
             if (player != null)
             {
+                // Rotate the player's camera to look at the projectile
+                player.transform.LookAt(currentProjectile.transform.position);
                 //Debug.Log("Locking player");
                 //playerController.LockMovement(true);
             }
@@ -91,6 +91,17 @@ public class CannonController : MonoBehaviour
 
         currentProjectile.SetActive(false);
         currentProjectile.transform.position = firePoint.position;
+        currentProjectile.transform.rotation = Quaternion.identity;
+        ResetObjectForces(currentProjectile.GetComponent<Rigidbody>());
         
+    }
+
+    private void ResetObjectForces(Rigidbody rb)
+    {
+        // Reset the object's velocity to zero to stop linear motion
+        rb.velocity = Vector3.zero;
+
+        // Reset the object's angular velocity to zero to stop rotation
+        rb.angularVelocity = Vector3.zero;
     }
 }
